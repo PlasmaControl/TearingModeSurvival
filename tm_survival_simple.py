@@ -84,30 +84,19 @@ transformer = scaler.fit(x_train_df)
 x_train_df = transformer.transform(x_train_df)
 x_test_df = transformer.transform(pd.DataFrame(x_test))
 
-param_grid = {'k' : [2, 3, 4, 6, 8],
-              'iters': [1],
-              'distribution' : ['LogNormal', 'Weibull'],
-              'learning_rate' : [ 1e-5, 1e-4, 1e-3 ],
-              'batch_size' : [100, 1000, 10000],
-              'layers' : [[50, 100, 150], 
-                          [30, 40, 50, 60], 
-                          [100], 
-                          [100, 100], 
-                          [100, 60, 175, 225, 120]],
-             }
-
-'''param_grid = {'k' : [3],
-              'iters': [3],
+param_grid = {'k' : [3],
+              'iters': [1000],
               'distribution' : ['LogNormal'],
-              'learning_rate' : [1e-3],
-              'batch_size' : [100, 10000],
+              'learning_rate' : [ 1e-3 ],
+              'batch_size' : [10000],
               'layers' : [[100, 60, 175, 225, 120]]
-             }'''
+             }
 
 params = ParameterGrid(param_grid)
 times = [20, 50, 100, 200]
 models=[]
-for param in params:
+for i, param in enumerate(params):
+    print('Hyperparameter ' + str(i) + ' of ' + str(len(params)))
     print(param)
     model = SurvivalModel(model='dsm', 
                       iters=param['iters'], 
@@ -117,20 +106,12 @@ for param in params:
                       learning_rate=param['learning_rate'], 
                       batch_size=param['batch_size']
                     )
-    '''model = SurvivalModel(model='dsm', 
-                          iters=param['iters'], 
-                          k=param['k'], 
-                          layers=param['layers'], 
-                          distribution=param['distribution'],
-                          learning_rate=param['learning_rate'], 
-                          batch_size=param['batch_size']
-                        )'''
     _, train_loss, val_loss = model.fit(x_train_df, outcomes_df, val_data=(x_valid_df, outcomes_valid_df))
 
     # Obtain survival probabilities for validation set and compute the Integrated Brier Score 
-    predictions_val = model.predict_survival(x_valid_df, times)
-    metric_val = survival_regression_metric('ibs', outcomes_valid_df, predictions_val, times)
-    models.append([metric_val, train_loss, val_loss, model])
+    #predictions_val = model.predict_survival(x_valid_df, times)
+    #metric_val = survival_regression_metric('ibs', outcomes_valid_df, predictions_val, times)
+    models.append([model, train_loss, val_loss, param])
 
-    with open('models.pkl', 'wb') as f:
+    with open('good_model.pkl', 'wb') as f:
         pickle.dump(models, f)
