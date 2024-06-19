@@ -12,11 +12,11 @@ def launch_control(baseconfig_filename='model.cfg',submit_runs=False, hyperparam
         output_dir=config['model']['output_dir']
         output_filename_base=config['model']['output_filename_base']
 
-        config_filename=os.path.join(output_dir,f'control_{output_filename_base}config')
+        config_filename=os.path.join(output_dir,f'{output_filename_base}config')
         #shutil.copyfile(baseconfig_filename, config_filename)
         with open(config_filename,'w') as f:
            config.write(f)
-        log_filename=os.path.join(output_dir,f'control_{output_filename_base}log.out')
+        log_filename=os.path.join(output_dir,f'{output_filename_base}log.out')
         slurm_text=f'''#!/bin/bash
 
 #SBATCH -N 1
@@ -24,13 +24,13 @@ def launch_control(baseconfig_filename='model.cfg',submit_runs=False, hyperparam
 #SBATCH -G 1
 #SBATCH --mem 48G
 #SBATCH -o {log_filename}
-#SBATCH -t 10:00:00
+#SBATCH -t 01:00:00
 
 root_dir={root_dir}
 module load anaconda3/2022.5
 conda activate torch
 cd $root_dir
-python -u tm_survival_simple.py
+python -u train_tm_model.py
 
 exit'''
         slurm_filename=os.path.join(output_dir,f'{output_filename_base}job.slurm')
