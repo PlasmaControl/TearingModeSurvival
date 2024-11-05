@@ -11,6 +11,9 @@ def launch_control(baseconfig_filename='model.cfg',submit_runs=False, hyperparam
                 config[category][hyperparam]=str(hyperparam_adjustment[category][hyperparam])
         output_dir=config['model']['output_dir']
         output_filename_base=config['model']['output_filename_base']
+        database_x_name=config['model']['database_x_name']
+        database_e_name=config['model']['database_e_name']
+        database_t_name=config['model']['database_t_name']
 
         config_filename=os.path.join(output_dir,f'{output_filename_base}config')
         #shutil.copyfile(baseconfig_filename, config_filename)
@@ -24,13 +27,13 @@ def launch_control(baseconfig_filename='model.cfg',submit_runs=False, hyperparam
 #SBATCH -G 1
 #SBATCH --mem 48G
 #SBATCH -o {log_filename}
-#SBATCH -t 01:00:00
+#SBATCH -t 20:00:00
 
 root_dir={root_dir}
 module load anaconda3/2022.5
 conda activate torch
 cd $root_dir
-python -u train_tm_model.py
+python -u train_tm_model.py {output_filename_base} {database_x_name} {database_e_name} {database_t_name}
 
 exit'''
         slurm_filename=os.path.join(output_dir,f'{output_filename_base}job.slurm')
