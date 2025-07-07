@@ -20,7 +20,9 @@ Use data_processing_main.ipynb to create a DSM-compatible database from TM event
 - For hyperparameter tuning using ray tube, run hyperparameter_tuner.py or launch_hyperparameter_tuning.py for the batch submission. These will read from hyperparam_model.cfg
 
 **Basic model analysis**
+
 Use tm_model_simple_analysis.ipynb for analysing training progress, tearing mode predictions and creating ROC curves.
 
 **Shap analysis**
+
 Use shap_analysis.ipynb to run shapley analysis of the tearing mode prediction model. This script includes individual profile analysis as well as database-wise scans using beeswarm plots. 
