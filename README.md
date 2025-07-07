@@ -12,6 +12,7 @@ For more advanced use, the repository includes the following features:
 4) Shap analysis
 
 **Creating the database**
+
 Use data_processing_main.ipynb to create a DSM-compatible database from TM event labels and plasma data. The data is extracted from DIII-D using the PlasmaControl/data-fetching repository, and the tearing mode event labels are created using the criteria outlined in the publication. 
 
 **Training the model**
