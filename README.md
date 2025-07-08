@@ -30,4 +30,4 @@ Use shap_analysis.ipynb to run shapley analysis of the tearing mode prediction m
 
 **Data Availability**
 
-The dataset used in the publication cited above is available at: DOI 10.17605/OSF.IO/3C7AY
+The dataset used in the publication cited above is available at: https://doi.org/10.17605/OSF.IO/3C7AY
