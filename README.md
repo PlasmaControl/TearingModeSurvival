@@ -27,3 +27,7 @@ Use tm_model_simple_analysis.ipynb for analysing training progress, tearing mode
 **Shap analysis**
 
 Use shap_analysis.ipynb to run shapley analysis of the tearing mode prediction model. This script includes individual profile analysis as well as database-wise scans using beeswarm plots. 
+
+**Data Availability**
+
+The dataset used in the publication cited above is available at: DOI 10.17605/OSF.IO/3C7AY
